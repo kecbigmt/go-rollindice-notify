@@ -7,6 +7,7 @@ import (
 	"syscall"
   "time"
   "strconv"
+  "net/http"
 
 	"github.com/bwmarrin/discordgo"
   "github.com/nlopes/slack"
@@ -60,6 +61,10 @@ func main() {
 
 	// Cleanly close down the Discord session.
 	dg.Close()
+
+  http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+    fmt.Fprintf(w, "Hello")
+  })
 }
 
 // This function will be called (due to AddHandler above) every time a new
