@@ -31,7 +31,6 @@ func main() {
   slackAPIToken = os.Getenv("SLACK_API_TOKEN")
   discordServerID = os.Getenv("DISCORD_SERVER_ID")
   discordBotToken = os.Getenv("DISCORD_BOT_TOKEN")
-  sg := slack.New(slackAPIToken)
   q = make(chan string, 100)
 
 	go worker()
@@ -63,6 +62,7 @@ func worker() {
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
+  sg := slack.New(slackAPIToken)
   go deleteOldMessages(sg, q)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
