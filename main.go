@@ -38,6 +38,10 @@ func main() {
   http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
     fmt.Fprintf(w, "Hello")
   })
+
+  if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func worker() {
