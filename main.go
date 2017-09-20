@@ -137,7 +137,7 @@ func deleteOldMessages(api *slack.Client, q chan string){
       timestamp := <- q
       t, _ := strconv.Atoi(timestamp)
       current := time.Now().Unix()
-      fmt.Println(current - int64(t))
+      fmt.Println(current, t, current - int64(t))
       if (current - int64(t)) > 3600 {
         respChannel, respTimestamp, err := api.DeleteMessage(slackChannelID, timestamp)
         if err != nil {
