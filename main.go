@@ -8,6 +8,7 @@ import (
   "time"
   "strconv"
   "net/http"
+  "log"
 
 	"github.com/bwmarrin/discordgo"
   "github.com/nlopes/slack"
