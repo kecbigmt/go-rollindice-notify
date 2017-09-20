@@ -34,7 +34,15 @@ func main() {
   sg := slack.New(slackAPIToken)
   q = make(chan string, 100)
 
-	// Create a new Discord session using the provided bot token.
+	go worker()
+
+  http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+    fmt.Fprintf(w, "Hello")
+  })
+}
+
+func worker() {
+  // Create a new Discord session using the provided bot token.
 	dg, err := discordgo.New("Bot " + discordBotToken)
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
@@ -61,10 +69,6 @@ func main() {
 
 	// Cleanly close down the Discord session.
 	dg.Close()
-
-  http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-    fmt.Fprintf(w, "Hello")
-  })
 }
 
 // This function will be called (due to AddHandler above) every time a new
