@@ -1,0 +1,1 @@
+web: go-rollindice-notify

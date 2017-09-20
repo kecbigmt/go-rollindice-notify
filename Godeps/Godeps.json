@@ -1,0 +1,41 @@
+{
+	"ImportPath": "github.com/kecbigmt/go-rollindice-notify",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/bwmarrin/discordgo",
+			"Comment": "v0.17.0",
+			"Rev": "2fda7ce223a66a5b70b66987c22c3c94d022ee66"
+		},
+		{
+			"ImportPath": "github.com/gorilla/websocket",
+			"Comment": "v1.2.0-7-g6f34763",
+			"Rev": "6f34763140ed8887aed6a044912009832b4733d7"
+		},
+		{
+			"ImportPath": "github.com/nlopes/slack",
+			"Comment": "v0.1.0-10-g5cde21b",
+			"Rev": "5cde21b8b96a43fc3435a1f514123d14fd7eabdc"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/nacl/secretbox",
+			"Rev": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/poly1305",
+			"Rev": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/salsa20/salsa",
+			"Rev": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5"
+		},
+		{
+			"ImportPath": "golang.org/x/net/websocket",
+			"Rev": "8351a756f30f1297fe94bbf4b767ec589c6ea6d0"
+		}
+	]
+}
