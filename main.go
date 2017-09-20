@@ -135,7 +135,7 @@ func deleteOldMessages(api *slack.Client, q chan string){
     time.Sleep(1)
     if len(q) > 0 {
       timestamp := <- q
-      f, _ := strconv.ParseFloat(, 64)
+      f, _ := strconv.ParseFloat(timestamp, 64)
       t := int64(f)
       current := time.Now().Unix()
       fmt.Println(current, t, current - t)
