@@ -6,7 +6,6 @@ import (
 	"os/signal"
 	"syscall"
   "time"
-  "strconv"
   "net/http"
   "log"
 
@@ -67,8 +66,8 @@ func worker() {
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
-  sg := slack.New(slackAPIToken)
-  go deleteOldMessages(sg, q)
+  //sg := slack.New(slackAPIToken)
+  //go deleteOldMessages(sg, q)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
 
@@ -114,7 +113,7 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
       return
     }
     //q <- timestamp
-    go deleteTimer(timestamp)
+    go deleteTimer(sg, timestamp)
     fmt.Printf("%v Message Successfully Sent: %v\n", timestamp, text)
     voiceStateMap[m.UserID] = ""
   default:
@@ -135,14 +134,10 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
       return
     }
     //q <- timestamp
-    go deleteTimer(timestamp)
+    go deleteTimer(sg, timestamp)
     fmt.Printf("%v Message Successfully Sent: %v\n", timestamp, text)
     voiceStateMap[m.UserID] = m.ChannelID
   }
-  /*tmp += 1
-  status := fmt.Sprintf("[%v]UserID:%v\nSessionID:%v\nChannelID:%v\nSuppress:%v\nSelfMute:%v\nSelfDeaf:%v\nMute:%v\nDeaf:%v", tmp, m.UserID, m.SessionID, m.ChannelID, m.Suppress, m.SelfMute, m.SelfDeaf, m.Mute, m.Deaf)
-  fmt.Println(status)
-  s.ChannelMessageSend(m.ChannelID, status)*/
 }
 
 // delete messages 1 hour elapsed
@@ -174,7 +169,7 @@ func deleteOldMessages(api *slack.Client, q chan string){
 }
 */
 
-func deleteTimer(timestamp string) {
+func deleteTimer(api *slack.Client, timestamp string) {
   time.Sleep(3600)
   respChannel, respTimestamp, err := api.DeleteMessage(slackChannelID, timestamp)
   if err != nil {
