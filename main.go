@@ -16,7 +16,7 @@ import (
 
 var (
   voiceStateMap map[string]string
-  q chan string
+  //q chan string
   slackChannelID string
   slackAPIToken string
   discordServerID string
@@ -32,7 +32,7 @@ func main() {
   slackAPIToken = os.Getenv("SLACK_API_TOKEN")
   discordServerID = os.Getenv("DISCORD_SERVER_ID")
   discordBotToken = os.Getenv("DISCORD_BOT_TOKEN")
-  q = make(chan string, 100)
+  //q = make(chan string, 100)
 
 	go worker()
 
@@ -113,7 +113,8 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
       fmt.Printf("%v\n", err)
       return
     }
-    q <- timestamp
+    //q <- timestamp
+    go deleteTimer(timestamp)
     fmt.Printf("%v Message Successfully Sent: %v\n", timestamp, text)
     voiceStateMap[m.UserID] = ""
   default:
@@ -133,7 +134,8 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
       fmt.Printf("%v\n", err)
       return
     }
-    q <- timestamp
+    //q <- timestamp
+    go deleteTimer(timestamp)
     fmt.Printf("%v Message Successfully Sent: %v\n", timestamp, text)
     voiceStateMap[m.UserID] = m.ChannelID
   }
@@ -144,6 +146,7 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
 }
 
 // delete messages 1 hour elapsed
+/*
 func deleteOldMessages(api *slack.Client, q chan string){
   for {
     time.Sleep(1)
@@ -167,5 +170,16 @@ func deleteOldMessages(api *slack.Client, q chan string){
     } else {
       continue
     }
+  }
+}
+*/
+
+func deleteTimer(timestamp string) {
+  time.Sleep(3600)
+  respChannel, respTimestamp, err := api.DeleteMessage(slackChannelID, timestamp)
+  if err != nil {
+    fmt.Printf("Slack API Error(%v): %v\n", timestamp, err)
+  } else {
+    fmt.Printf("Old message successfully deleted: %v, %v\n", respChannel, respTimestamp)
   }
 }
