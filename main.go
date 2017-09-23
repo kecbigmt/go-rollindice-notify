@@ -124,11 +124,11 @@ func voiceStateUpdate(s *discordgo.Session, m *discordgo.VoiceStateUpdate) {
     text := fmt.Sprintf("[Discord]%vがボイスチャンネル「%v」に入室しました。", username, channelname)
     params := slack.PostMessageParameters{AsUser:true}
     attachment := slack.Attachment{
-  		Title: text,
+  		Title: "ブラウザでDiscordを開く",
   		TitleLink: "https://discordapp.com/channels/" + discordServerID,
 	  }
     params.Attachments = []slack.Attachment{attachment}
-    _, timestamp, err := sg.PostMessage(slackChannelID, "", params)
+    _, timestamp, err := sg.PostMessage(slackChannelID, text, params)
     if err != nil {
       fmt.Printf("%v\n", err)
       return
